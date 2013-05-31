@@ -37,7 +37,7 @@ Please refer to documentation for values' formats of each key.
 ## Usage
 
 ```
-user=> (:use 'sitemap.core)
+user=> (use 'sitemap.core)
 nil
 user=> (generate-sitemap [{:loc "http://hashobject.com/about"
                          :lastmod "2013-05-31"
