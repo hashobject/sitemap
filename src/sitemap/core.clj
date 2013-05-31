@@ -1,5 +1,5 @@
 (ns sitemap.core
-  "Library library for sitemap generation."
+  "Library for sitemap generation."
   (:use
       [clojure.java.io]
       [hiccup.core :only (html)]
