@@ -1,9 +1,34 @@
 (ns sitemap.core
   (:use
+      [clojure.java.io]
       [hiccup.core :only (html)]
-      [hiccup.page :only (xml-declaration)])
+      [hiccup.page :only (xml-declaration)]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+
+(defn xml-header []
+  (html (xml-declaration "UTF-8")))
+
+
+(defn generate-url-entry [entry]
+  [:url
+    [:loc (:loc entry)]
+    [:lastmod (:lastmod entry)]
+    [:changefreq (:changefreq entry)]
+    [:priority (:priority entry)]])
+
+
+(defn generate-url-entries [entries]
+  (html
+     [:urlset {:xmlns "http://www.sitemaps.org/schemas/sitemap/0.9"}
+      (map generate-url-entry entries)]))
+
+
+(defn generate-sitemap [url-entries]
+  (str (xml-header)
+       (generate-url-entries url-entries)))
+
+
+(defn generate-sitemap-and-save [path url-entries]
+  (let [sitemap-xml (generate-sitemap url-entries)]
+    (spit path sitemap-xml)
+    sitemap-xml))
