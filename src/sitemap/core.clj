@@ -13,9 +13,12 @@
 (defn- generate-url-entry [entry]
   [:url
     [:loc (:loc entry)]
-    [:lastmod (:lastmod entry)]
-    [:changefreq (:changefreq entry)]
-    [:priority (:priority entry)]])
+    (if (:lastmod entry)
+      [:lastmod (:lastmod entry)])
+    (if (:changefreq entry)
+      [:changefreq (:changefreq entry)])
+    (if (:priority entry)
+      [:priority (:priority entry)])])
 
 
 (defn- generate-url-entries [entries]

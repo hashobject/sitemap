@@ -1,4 +1,4 @@
-(defproject sitemap "0.1.0"
+(defproject sitemap "0.2.0"
   :description "Clojure library for sitemap generation."
   :signing {:gpg-key "HashObject Ltd <team@hashobject.com>"}
   :url "https://github.com/hashobject/sitemap"

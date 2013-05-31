@@ -23,7 +23,7 @@ Input data structure should be in the following format:
 ```
 
 So it should be sequence of hash maps. Each map should have following keys: loc, lastmod,
-changefreq, priority.
+changefreq, priority. Only `loc` key is mandatory.
 
 Please refer to documentation for values' formats of each key.
 
@@ -31,7 +31,7 @@ Please refer to documentation for values' formats of each key.
 ## Install
 
 ```
-[sitemap "0.1.0"]
+[sitemap "0.2.0"]
 ```
 
 ## Usage
