@@ -22,8 +22,8 @@ Input data structure should be in the following format:
    :priority "0.9"}]
 ```
 
-So it should be sequence of hash maps. Each map should have following keys: loc, lastmod,
-changefreq, priority. Only `loc` key is mandatory.
+So it should be sequence of hash maps. Each map should have following keys: `loc`, `lastmod`,
+`changefreq`, `priority`. Only `loc` key is mandatory.
 
 Please refer to documentation for values' formats of each key.
 
