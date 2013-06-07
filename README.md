@@ -2,7 +2,7 @@
 
 Clojure library for generating sitemaps.
 
-[![Build Status](https://travis-ci.org/[hashobject]/[sitemap].png)](https://travis-ci.org/[hashobject]/[sitemap])
+[![Build Status](https://travis-ci.org/hashobject/sitemap.png)](https://travis-ci.org/hashobject/sitemap)
 
 Sitemaps XML format described on [http://www.sitemaps.org/](http://www.sitemaps.org/protocol.html).
 
