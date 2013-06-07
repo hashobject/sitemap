@@ -36,7 +36,7 @@
 
 
 (deftest entry-without-optional-fields-test
-  (testing "Sitemap was generate incorrectly because of erros with optional fields."
+  (testing "Sitemap was generated incorrectly because of errors with optional fields."
     (is (= sample-sitemap-xml-without-optional-fields (generate-sitemap [{:loc "http://hashobject.com/about"}
                         {:loc "http://hashobject.com/team"
                          :changefreq "yearly"}])))))
