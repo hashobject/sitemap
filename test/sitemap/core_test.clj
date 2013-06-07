@@ -22,19 +22,6 @@
                          :priority "0.9"}])))))
 
 
-(deftest correct-sitemap-saved-to-file-test
-  (testing "Sitemap was generate incorrectly or problem occured during saving to file."
-    (is (= sample-sitemap-xml (generate-sitemap-and-save "./resources/sitemap.xml"
-                [{:loc "http://hashobject.com/about"
-                 :lastmod "2013-05-31"
-                 :changefreq "monthly"
-                 :priority "0.8"}
-                {:loc "http://hashobject.com/team"
-                 :lastmod "2013-06-01"
-                 :changefreq "monthly"
-                 :priority "0.9"}])))))
-
-
 (deftest entry-without-optional-fields-test
   (testing "Sitemap was generated incorrectly because of errors with optional fields."
     (is (= sample-sitemap-xml-without-optional-fields (generate-sitemap [{:loc "http://hashobject.com/about"}
