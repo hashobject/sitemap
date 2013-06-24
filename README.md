@@ -56,13 +56,27 @@ user=> (generate-sitemap [{:loc "http://hashobject.com/about"
                          :lastmod "2013-06-01"
                          :changefreq "monthly"
                          :priority "0.9"}])
-"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>http://hashobject.com/about</loc><lastmod>2013-05-31</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url><url><loc>http://hashobject.com/team</loc><lastmod>2013-06-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url></urlset>"
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">
+  <url>
+    <loc>http://hashobject.com/about</loc>
+    <lastmod>2013-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://hashobject.com/team</loc>
+    <lastmod>2013-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>"
 ```
 
 ## Tips
 
-We recommend you validate sitemap before submitting it to Google Webmaster tools.
-There are plenty of online validators.
+We recommend you to validate sitemap before submitting it to Google Webmaster tools.
+There are plenty of online validators. Maybe we will later add validation support to this library.
 
 ## Contributions
 
