@@ -12,7 +12,7 @@ Optionally sitemap XML can be saved to file using provided path.
 
 Input data structure should be in the following format:
 
-```
+```clojure
 [
   {:loc "http://hashobject.com/about"
    :lastmod "2013-05-31"
@@ -24,21 +24,28 @@ Input data structure should be in the following format:
    :priority "0.9"}]
 ```
 
-So it should be sequence of hash maps. Each map should have following keys: `loc`, `lastmod`,
-`changefreq`, `priority`. Only `loc` key is mandatory.
+So it should be sequence of hash maps. Each map should have following keys:
+
+  * loc - url to the page
+  * lastmod - date when page was modified in YYYY-MM-DD format
+  * changefreq - how often page content will be changed (daily, weekly, monthly, never)
+  * priority - what is the priority of this page on the site (from 0 to 1)
+
+
+Note that only 'loc' key is mandatory.
 
 Please refer to documentation for values' formats of each key.
 
 
 ## Install
 
-```
+```shell
 [sitemap "0.2.0"]
 ```
 
 ## Usage
 
-```
+```shell
 user=> (use 'sitemap.core)
 nil
 user=> (generate-sitemap [{:loc "http://hashobject.com/about"
@@ -56,6 +63,10 @@ user=> (generate-sitemap [{:loc "http://hashobject.com/about"
 
 We recommend you validate sitemap before submitting it to Google Webmaster tools.
 There are plenty of online validators.
+
+## Contributions
+
+We love contributions. Please submit your pull requests.
 
 
 ## License
