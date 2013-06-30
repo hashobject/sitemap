@@ -12,7 +12,7 @@ Optionally sitemap XML can be saved to file using provided path.
 
 Input data structure should be in the following format:
 
-```clojure
+```
 [
   {:loc "http://hashobject.com/about"
    :lastmod "2013-05-31"
@@ -39,13 +39,13 @@ Please refer to documentation for values' formats of each key.
 
 ## Install
 
-```shell
+```
 [sitemap "0.2.0"]
 ```
 
 ## Usage
 
-```shell
+```
 user=> (use 'sitemap.core)
 nil
 user=> (generate-sitemap [{:loc "http://hashobject.com/about"
@@ -56,6 +56,7 @@ user=> (generate-sitemap [{:loc "http://hashobject.com/about"
                          :lastmod "2013-06-01"
                          :changefreq "monthly"
                          :priority "0.9"}])
+
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">
   <url>
