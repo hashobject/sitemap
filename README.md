@@ -57,8 +57,13 @@ user=> (generate-sitemap [{:loc "http://hashobject.com/about"
                          :lastmod "2013-06-01"
                          :changefreq "monthly"
                          :priority "0.9"}])
-<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">
+```
+
+generates the following XML:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://hashobject.com/about</loc>
     <lastmod>2013-05-31</lastmod>
@@ -100,7 +105,7 @@ This library can validate the generated XML against [version 0.9](http://www.sit
 ; "You have 0 errors"
 ```
 
-Validation errors are reported as a list of Exceptions:
+Validation errors are reported as a list of [SAXParseException](http://docs.oracle.com/javase/7/docs/api/org/xml/sax/SAXParseException.html):
 
 ```clojure
 (->> 
