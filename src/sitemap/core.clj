@@ -5,9 +5,11 @@
       [hiccup.core :only (html)]
       [hiccup.page :only (xml-declaration)]))
 
+; Sitemaps MUST be UTF-8 encoded - http://www.sitemaps.org/faq.html#faq_output_encoding
+(def encoding-utf-8 "UTF-8")
 
 (defn- xml-header []
-  (html (xml-declaration "UTF-8")))
+  (html (xml-declaration encoding-utf-8)))
 
 
 (defn- generate-url-entry [entry]
@@ -38,5 +40,5 @@
   "Render Clojure data structures to a string of sitemap XML and save it to file."
   [path url-entries]
   (let [sitemap-xml (generate-sitemap url-entries)]
-    (spit path sitemap-xml)
+    (spit path sitemap-xml :encoding encoding-utf-8)
     sitemap-xml))

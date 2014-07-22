@@ -41,7 +41,7 @@ Please refer to documentation for values' formats of each key.
 ## Install
 
 ```
-[sitemap "0.2.0"]
+[sitemap "0.2.3"]
 ```
 
 ## Usage
