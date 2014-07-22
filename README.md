@@ -13,7 +13,7 @@ Optionally sitemap XML can be saved to file using provided path.
 
 Input data structure should be in the following format:
 
-```
+```clojure
 [
   {:loc "http://hashobject.com/about"
    :lastmod "2013-05-31"
@@ -81,7 +81,7 @@ You can use this library and there are also plenty of online validators.
 
 ## Validation
 
-This library can validate the generated XML against [version 0.9][http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd] of the schema.
+This library can validate the generated XML against [version 0.9](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) of the schema.
 
 ```clojure
 (use 'sitemap.core)
@@ -114,7 +114,8 @@ Validation errors are reported as a list of Exceptions:
   (first)
   (format "Your first error is %s"))
 
-; "Your first error is cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'tLastmod'."
+; "Your first error is cvc-datatype-valid.1.2.3: 
+;   '2000-00-00' is not a valid value of union type 'tLastmod'."
 ```
 
 ## Contributions
