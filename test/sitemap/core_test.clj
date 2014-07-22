@@ -34,7 +34,9 @@
 (deftest encoding-test
   (testing "We can round-trip non-ascii characters."
     (let [tmp (File/createTempFile "sitemap-" ".xml")]
-      (generate-sitemap-and-save tmp [{:loc "http://example.com/Iñtërnâtiônàlizætiøn/"}])
+      (->>
+        (generate-sitemap [{:loc "http://example.com/Iñtërnâtiônàlizætiøn/"}])
+        (save-sitemap tmp))
       (is (= "http://example.com/Iñtërnâtiônàlizætiøn/"
             (-> (xml/parse tmp)
               (get :content)

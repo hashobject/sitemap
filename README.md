@@ -41,12 +41,12 @@ Please refer to documentation for values' formats of each key.
 ## Install
 
 ```
-[sitemap "0.2.3"]
+[sitemap "0.2.4"]
 ```
 
 ## Usage
 
-```
+```clojure
 user=> (use 'sitemap.core)
 nil
 user=> (generate-sitemap [{:loc "http://hashobject.com/about"
@@ -76,8 +76,46 @@ user=> (generate-sitemap [{:loc "http://hashobject.com/about"
 
 ## Tips
 
-We recommend you to validate sitemap before submitting it to Google Webmaster tools.
-There are plenty of online validators. Maybe we will later add validation support to this library.
+We recommend you to validate your sitemap before submitting it to Google Webmaster tools.
+You can use this library and there are also plenty of online validators. 
+
+## Validation
+
+This library can validate the generated XML against [version 0.9][http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd] of the schema.
+
+```clojure
+(use 'sitemap.core)
+(import 'java.io.File)
+
+(->> 
+  (generate-sitemap [{:loc "http://example.com/about"
+                      :lastmod "2014-07-22"
+                      :changefreq "monthly"
+                      :priority "0.8"}])
+  (save-sitemap (File. "/tmp/sitemap.xml"))
+  (validate-sitemap)
+  (count)
+  (format "You have %d errors"))
+
+; "You have 0 errors"
+```
+
+Validation errors are reported as a list of Exceptions:
+
+```clojure
+(->> 
+  (generate-sitemap [{:loc "http://example.com/about"
+                      :lastmod "2000-00-00"
+                      :changefreq "monthly"
+                      :priority "0.8"}])
+  (save-sitemap (File. "/tmp/sitemap-bad.xml"))
+  (validate-sitemap)
+  (map #(.getMessage %))
+  (first)
+  (format "Your first error is %s"))
+
+; "Your first error is cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'tLastmod'."
+```
 
 ## Contributions
 

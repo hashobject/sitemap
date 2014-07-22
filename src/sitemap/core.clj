@@ -1,9 +1,10 @@
 (ns sitemap.core
-  "Library for sitemap generation."
+  "Library for sitemap generation and validation."
   (:use
       [clojure.java.io]
       [hiccup.core :only (html)]
-      [hiccup.page :only (xml-declaration)]))
+      [hiccup.page :only (xml-declaration)])
+  (:require [sitemap.validator :as v]))
 
 ; Sitemaps MUST be UTF-8 encoded - http://www.sitemaps.org/faq.html#faq_output_encoding
 (def encoding-utf-8 "UTF-8")
@@ -30,15 +31,27 @@
 
 
 (defn generate-sitemap
-  "Render Clojure data structures to a string of sitemap XML."
+  "Render Clojure data structures to a String of sitemap XML."
   [url-entries]
   (str (xml-header)
        (generate-url-entries url-entries)))
 
 
-(defn generate-sitemap-and-save
-  "Render Clojure data structures to a string of sitemap XML and save it to file."
-  [path url-entries]
-  (let [sitemap-xml (generate-sitemap url-entries)]
-    (spit path sitemap-xml :encoding encoding-utf-8)
-    sitemap-xml))
+(defn save-sitemap [f sitemap-xml]
+  "Save the sitemap XML to a UTF-8 encoded File."
+  (doto f
+    (spit sitemap-xml :encoding encoding-utf-8)))
+
+
+(defn validate-sitemap [f]
+  "Validate a File or InputStream that contains an XML sitemap
+   against the sitemaps.org schema and return a list of 
+   validation errors. If the Sitemap is valid then the list 
+   will be empty. If the XML is structurally invalid then 
+   a SAXParseException will be thrown."
+  (let [errors (atom [])]
+    (doto
+      (v/new-document-builder v/sitemap-xsd)
+      (.setErrorHandler (v/new-throwing-error-handler errors))
+      (.parse f))
+     @errors))
