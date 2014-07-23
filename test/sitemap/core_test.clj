@@ -1,6 +1,8 @@
 (ns sitemap.core-test
   (:use clojure.test
-        sitemap.core))
+        sitemap.core)
+  (:import [java.io File])
+  (:require [clojure.xml :as xml]))
 
 (def sample-sitemap-xml
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>http://hashobject.com/about</loc><lastmod>2013-05-31</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url><url><loc>http://hashobject.com/team</loc><lastmod>2013-06-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url></urlset>")
@@ -27,3 +29,19 @@
     (is (= sample-sitemap-xml-without-optional-fields (generate-sitemap [{:loc "http://hashobject.com/about"}
                         {:loc "http://hashobject.com/team"
                          :changefreq "yearly"}])))))
+
+
+(deftest encoding-test
+  (testing "We can round-trip non-ascii characters."
+    (let [tmp (File/createTempFile "sitemap-" ".xml")]
+      (->>
+        (generate-sitemap [{:loc "http://example.com/Iñtërnâtiônàlizætiøn/"}])
+        (save-sitemap tmp))
+      (is (= "http://example.com/Iñtërnâtiônàlizætiøn/"
+            (-> (xml/parse tmp)
+              (get :content)
+              (first)
+              (get :content)
+              (first)
+              (get :content)
+              (first)))))))
