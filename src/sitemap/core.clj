@@ -43,15 +43,9 @@
     (spit sitemap-xml :encoding encoding-utf-8)))
 
 
-(defn validate-sitemap [f]
-  "Validate a File or InputStream that contains an XML sitemap
-   against the sitemaps.org schema and return a list of 
-   validation errors. If the Sitemap is valid then the list 
-   will be empty. If the XML is structurally invalid then 
-   a SAXParseException will be thrown."
-  (let [errors (atom [])]
-    (doto
-      (v/new-document-builder v/sitemap-xsd)
-      (.setErrorHandler (v/new-throwing-error-handler errors))
-      (.parse f))
-     @errors))
+(defn validate-sitemap [in]
+  "Validate a File, String or InputStream that contains an XML sitemap
+   against the sitemaps.org schema and return a list of validation errors. 
+   If the Sitemap is valid then the list will be empty. If the XML is 
+   structurally invalid then a SAXParseException will be thrown."
+   (v/validate-sitemap in))

@@ -94,9 +94,9 @@ This library can validate the generated XML against [version 0.9](http://www.sit
 
 (->> 
   (generate-sitemap [{:loc "http://example.com/about"
-                      :lastmod "2014-07-22"
+                      :lastmod "2014-07-23"
                       :changefreq "monthly"
-                      :priority "0.8"}])
+                      :priority "0.5"}])
   (save-sitemap (File. "/tmp/sitemap.xml"))
   (validate-sitemap)
   (count)
@@ -115,12 +115,10 @@ Validation errors are reported as a list of [SAXParseException](http://docs.orac
                       :priority "0.8"}])
   (save-sitemap (File. "/tmp/sitemap-bad.xml"))
   (validate-sitemap)
-  (map #(.getMessage %))
-  (first)
-  (format "Your first error is %s"))
+  (map #(.getMessage %)))
 
-; "Your first error is cvc-datatype-valid.1.2.3: 
-;   '2000-00-00' is not a valid value of union type 'tLastmod'."
+;("cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'tLastmod'."
+; "cvc-type.3.1.3: The value '2000-00-00' of element 'lastmod' is not valid.")
 ```
 
 ## Contributions

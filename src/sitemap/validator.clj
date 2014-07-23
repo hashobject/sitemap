@@ -3,7 +3,8 @@
   (:import [javax.xml.parsers DocumentBuilderFactory]
            [javax.xml.validation SchemaFactory]
            [javax.xml XMLConstants]
-           [org.xml.sax ErrorHandler]
+           [java.io File InputStream StringReader]
+           [org.xml.sax ErrorHandler InputSource]
            [javax.xml.transform.stream.StreamSource]))
 
 ; The latest version of the sitemaps.org schema.
@@ -38,3 +39,27 @@
     (warning    [this e] (swap! error-list conj e)); (throw e))
     (error      [this e] (swap! error-list conj e)); (throw e))
     (fatalError [this e] (swap! error-list conj e)))); (throw e))))
+
+
+(defmulti  parse-xml-document (fn [in db] (class in)))
+
+(defmethod parse-xml-document File [in db] 
+  (.parse db in))
+
+(defmethod parse-xml-document InputStream [in db] 
+  (.parse db in))
+
+(defmethod parse-xml-document String [in db] 
+  (with-open [r (StringReader. in)]
+    (.parse db (InputSource. r))))
+
+
+(defn validate-sitemap [in]
+  "Validate a File, String or InputStream containing an XML sitemap."
+  (let [errors (atom [])]
+    (->>
+      (doto
+        (new-document-builder sitemap-xsd)
+        (.setErrorHandler (new-throwing-error-handler errors)))
+      (parse-xml-document in))
+     @errors))
