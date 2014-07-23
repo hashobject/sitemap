@@ -15,9 +15,13 @@
     (validate-sitemap)
     (map #(.getMessage %))))
 
-(deftest valid-test
-  (testing "We can validate a good sitemap."
+(deftest valid-test-file
+  (testing "We can validate a good sitemap from a File."
     (is (= [] (validate-sitemap (fixture "sitemap-valid"))))))
+
+(deftest valid-test-string
+  (testing "We can validate a good sitemap from a String."
+    (is (= [] (validate-sitemap (slurp (fixture "sitemap-valid")))))))
 
 (deftest invalid-test
   (testing "Invalid XML in a bad sitemap fails hard."
