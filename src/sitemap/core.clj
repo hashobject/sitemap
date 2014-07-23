@@ -37,6 +37,14 @@
        (generate-url-entries url-entries)))
 
 
+(defn generate-sitemap-and-save
+  "Render Clojure data structures to a string of sitemap XML and save it to file."
+  [path url-entries]
+  (let [sitemap-xml (generate-sitemap url-entries)]
+    (spit path sitemap-xml :encoding encoding-utf-8)
+    sitemap-xml))
+
+
 (defn save-sitemap [f sitemap-xml]
   "Save the sitemap XML to a UTF-8 encoded File."
   (doto f
@@ -47,5 +55,5 @@
   "Validate a File, String or InputStream that contains an XML sitemap
    against the sitemaps.org schema and return a list of validation errors. 
    If the Sitemap is valid then the list will be empty. If the XML is 
-   structurally invalid then a SAXParseException will be thrown."
+   structurally invalid then throws SAXParseException."
    (v/validate-sitemap in))
