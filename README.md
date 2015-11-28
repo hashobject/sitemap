@@ -8,7 +8,7 @@ Clojure library for generating sitemaps.
 
 Sitemaps XML format described on [http://www.sitemaps.org/](http://www.sitemaps.org/protocol.html).
 
-Sitemap library accepts Clojure datastructure and produces sitemap XML as string.
+Sitemap library accepts Clojure list/vectore data sctructure and produces sitemap XML as string.
 
 Optionally sitemap XML can be saved to file using provided path.
 
@@ -115,7 +115,7 @@ Validation errors are reported as a list of [SAXParseException](http://docs.orac
   (save-sitemap (File. "/tmp/sitemap-bad.xml"))
   (validate-sitemap)
   (map #(.getMessage %)))
-;("cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'tLastmod'."
+;("cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'lastmod'."
 ; "cvc-type.3.1.3: The value '2000-00-00' of element 'lastmod' is not valid.")
 ```
 
