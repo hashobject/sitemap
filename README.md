@@ -92,7 +92,6 @@ This library can validate the generated XML against [version 0.9](http://www.sit
 ```clojure
 (use 'sitemap.core)
 (import 'java.io.File)
-
 (->> 
   (generate-sitemap [{:loc "http://example.com/about"
                       :lastmod "2014-07-23"
@@ -102,7 +101,6 @@ This library can validate the generated XML against [version 0.9](http://www.sit
   (validate-sitemap)
   (count)
   (format "You have %d errors"))
-
 ; "You have 0 errors"
 ```
 
@@ -117,7 +115,6 @@ Validation errors are reported as a list of [SAXParseException](http://docs.orac
   (save-sitemap (File. "/tmp/sitemap-bad.xml"))
   (validate-sitemap)
   (map #(.getMessage %)))
-
 ;("cvc-datatype-valid.1.2.3: '2000-00-00' is not a valid value of union type 'tLastmod'."
 ; "cvc-type.3.1.3: The value '2000-00-00' of element 'lastmod' is not valid.")
 ```
