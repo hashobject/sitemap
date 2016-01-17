@@ -83,7 +83,7 @@ generates the following XML:
 ## Tips
 
 We recommend you to validate your sitemap before submitting it to Google Webmaster tools.
-You can use this library and there are also plenty of online validators. 
+You can use this library and there are also plenty of online validators.
 
 ## Validation
 
@@ -92,7 +92,7 @@ This library can validate the generated XML against [version 0.9](http://www.sit
 ```clojure
 (use 'sitemap.core)
 (import 'java.io.File)
-(->> 
+(->>
   (generate-sitemap [{:loc "http://example.com/about"
                       :lastmod "2014-07-23"
                       :changefreq "monthly"
@@ -107,7 +107,7 @@ This library can validate the generated XML against [version 0.9](http://www.sit
 Validation errors are reported as a list of [SAXParseException](http://docs.oracle.com/javase/7/docs/api/org/xml/sax/SAXParseException.html):
 
 ```clojure
-(->> 
+(->>
   (generate-sitemap [{:loc "http://example.com/about"
                       :lastmod "2000-00-00"
                       :changefreq "monthly"
@@ -126,6 +126,6 @@ We love contributions. Please submit your pull requests.
 
 ## License
 
-Copyright © 2013-2015 Hashobject Ltd (team@hashobject.com).
+Copyright © 2013-2016 Hashobject Ltd (team@hashobject.com).
 
 Distributed under the [Eclipse Public License](http://opensource.org/licenses/eclipse-1.0).
