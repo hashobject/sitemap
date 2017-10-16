@@ -1,5 +1,7 @@
 (ns sitemap.core
   "Library for sitemap generation and validation."
+  (:import
+    [java.util.zip GZIPOutputStream])
   (:require
     [clojure.java.io :as io]
     [hiccup.core :refer [html]]
@@ -20,6 +22,13 @@
 
 (defn- spit-utf8 [path s]
   (spit path s :encoding encoding-utf-8))
+
+(defn- spit-gzipped [path s]
+  (with-open [w (-> path
+                    io/output-stream
+                    GZIPOutputStream.
+                    (io/writer :encoding encoding-utf-8))]
+    (.write w s)))
 
 
 (defn- generate-url-entry [entry]
@@ -90,19 +99,25 @@
   dir/sitemap.xml (index, pointing to https://example.com/sitemap-0.xml and so on),
   dir/sitemap-0.xml, dir/sitemap-1.xml, and so on."
   ([absolute-root basename url-entries]
-   (generate-sitemap-and-save* absolute-root basename url-entries path-generator))
-  ([absolute-root basename url-entries path-generator]
-   (let [sitemap-xmls (generate-sitemap* url-entries)
-         root-path (root-path path-generator basename)]
+   (generate-sitemap-and-save* absolute-root basename url-entries nil))
 
-     (if (= 1 (count sitemap-xmls))
-       (spit-utf8 root-path (first sitemap-xmls))
+  ([absolute-root basename url-entries opts]
+   (let [{:keys [^SitemapPathGenerator path-generator gzip?]
+          :or {path-generator path-generator
+               gzip? true}} opts
+         spit-fn (or (:spit-fn opts) (if gzip? spit-gzipped spit-utf8))]
 
-       (let [sitemap-paths (map #(chunk-path path-generator basename %) (range (count sitemap-xmls)))
-             remote-paths (map #(str absolute-root "/" (.getName (io/file %))) sitemap-paths)]
-         (spit-utf8 root-path (generate-sitemap-index remote-paths))
-         (doseq [[xml path] (map vector sitemap-xmls sitemap-paths)]
-           (spit-utf8 path xml)))))))
+     (binding [*extension* (if gzip? (str *extension* ".gz") *extension*)]
+       (let [sitemap-xmls (generate-sitemap* url-entries)
+             root-path (root-path path-generator basename)]
+         (if (= 1 (count sitemap-xmls))
+           (spit-fn root-path (first sitemap-xmls))
+
+           (let [sitemap-paths (map #(chunk-path path-generator basename %) (range (count sitemap-xmls)))
+                 remote-paths (map #(str absolute-root "/" (.getName (io/file %))) sitemap-paths)]
+             (spit-fn root-path (generate-sitemap-index remote-paths))
+             (doseq [[xml path] (map vector sitemap-xmls sitemap-paths)]
+               (spit-fn path xml)))))))))
 
 
 (defn generate-sitemap-and-save
