@@ -4,8 +4,7 @@
            [javax.xml.validation SchemaFactory]
            [javax.xml XMLConstants]
            [java.io File InputStream StringReader]
-           [org.xml.sax ErrorHandler InputSource]
-           [javax.xml.transform.stream.StreamSource]))
+           [org.xml.sax ErrorHandler InputSource]))
 
 ; The latest version of the sitemaps.org schema.
 (def sitemap-xsd (io/resource "org/sitemaps/schemas/0.9/sitemap.xsd"))
@@ -23,7 +22,7 @@
   "Make a DocumentBuilder that checks namespaces
    and validates against a Schema."
   (->
-    (doto 
+    (doto
       (DocumentBuilderFactory/newInstance)
       (.setNamespaceAware true)
       (.setSchema (read-schema xsd-url)))
@@ -43,13 +42,13 @@
 
 (defmulti  parse-xml-document (fn [in db] (class in)))
 
-(defmethod parse-xml-document File [in db] 
+(defmethod parse-xml-document File [in db]
   (.parse db in))
 
-(defmethod parse-xml-document InputStream [in db] 
+(defmethod parse-xml-document InputStream [in db]
   (.parse db in))
 
-(defmethod parse-xml-document String [in db] 
+(defmethod parse-xml-document String [in db]
   (with-open [r (StringReader. in)]
     (.parse db (InputSource. r))))
 
